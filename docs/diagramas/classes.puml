@@ -1,0 +1,110 @@
+@startuml classes
+skinparam classAttributeIconSize 0
+
+enum Perfil {
+  CLIENTE
+  AGENTE
+}
+enum TipoAgente {
+  EMPRESA
+  BANCO
+}
+enum StatusPedido {
+  EM_ANALISE
+  APROVADO
+  REPROVADO
+  CANCELADO
+  CONTRATO_EM_EXECUCAO
+}
+enum Parecer {
+  APROVADO
+  REPROVADO
+}
+enum SituacaoCredito {
+  SOLICITADO
+  APROVADO
+  ATIVO
+  QUITADO
+  CANCELADO
+}
+
+interface Proprietario
+
+abstract class Usuario {
+  - id: String
+  - nome: String
+  - email: String
+  - senhaHash: String
+  - perfil: Perfil
+}
+
+class Cliente {
+  - cpf: String
+  - rg: String
+  - endereco: String
+  - profissao: String
+  + adicionarRendimento(r: Rendimento): void
+}
+
+class Agente {
+  - cnpj: String
+  - endereco: String
+  - tipo: TipoAgente
+  + ehBanco(): boolean
+}
+
+class Rendimento {
+  - entidadeEmpregadora: String
+  - valor: double
+}
+
+class Automovel {
+  - id: String
+  - marca: String
+  - modelo: String
+  - ano: int
+  - placa: String
+  - matricula: String
+}
+
+class PedidoAluguel {
+  - id: String
+  - dataCriacao: Date
+  - dataInicio: Date
+  - dataFim: Date
+  - status: StatusPedido
+  + cancelar(): void
+  + aprovar(): void
+  + executar(): void
+}
+
+class AvaliacaoFinanceira {
+  - id: String
+  - dataAnalise: Date
+  - parecer: Parecer
+  - observacao: String
+}
+
+class ContratoCredito {
+  - id: String
+  - valorFinanciado: double
+  - prazoMeses: int
+  - situacao: SituacaoCredito
+}
+
+Usuario <|-- Cliente
+Usuario <|-- Agente
+Proprietario <|.. Cliente
+Proprietario <|.. Agente
+
+Cliente "1" *-- "0..3" Rendimento
+Automovel "*" --> "1" Proprietario : proprietário atual
+Cliente "1" --> "*" PedidoAluguel : solicita
+PedidoAluguel "*" --> "1" Automovel
+PedidoAluguel "*" --> "0..1" Agente : responsável
+PedidoAluguel "1" --> "0..1" AvaliacaoFinanceira
+AvaliacaoFinanceira "*" --> "1" Agente : realizada por
+PedidoAluguel "1" --> "0..1" ContratoCredito
+ContratoCredito "*" --> "1" Agente : banco concedente
+note right of ContratoCredito : Agente deve ter tipo = BANCO
+@enduml

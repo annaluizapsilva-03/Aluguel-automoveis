@@ -1,0 +1,29 @@
+@startuml pacotes
+skinparam packageStyle folder
+package "Visão (View)" as view {
+  package "views (EJS/templates)" as v1
+  package "public (css, js)" as v2
+}
+package "Controle (Controller)" as controller {
+  package "controllers" as c1
+  package "routes" as c2
+  package "middlewares\n(autenticação, perfil)" as c3
+}
+package "Modelo (Model)" as model {
+  package "models (schemas)" as m1
+  package "services\n(regras de negócio)" as m2
+}
+package "Infraestrutura" as infra {
+  package "config (MongoDB, env)" as i1
+}
+database "MongoDB" as db
+
+c2 --> c3
+c2 --> c1
+c1 --> m2
+c1 --> v1
+m2 --> m1
+m1 --> i1
+i1 --> db
+v1 ..> v2
+@enduml

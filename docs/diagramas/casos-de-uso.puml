@@ -1,0 +1,48 @@
+@startuml casos-de-uso
+left to right direction
+skinparam packageStyle rectangle
+actor Cliente
+actor Agente
+actor "Agente Banco" as Banco
+Agente <|-- Banco
+
+rectangle "Sistema Web de Aluguel de Automóveis" {
+  usecase "Cadastrar-se" as UC01
+  usecase "Autenticar-se" as UC02
+  usecase "Gerenciar dados do cliente\n(consultar, editar, excluir)" as UC03
+  usecase "Gerenciar automóveis\n(CRUD)" as UC04
+  usecase "Criar pedido de aluguel" as UC05
+  usecase "Editar pedido" as UC06
+  usecase "Cancelar pedido" as UC07
+  usecase "Consultar pedidos e status" as UC08
+  usecase "Consultar pedidos pendentes" as UC09
+  usecase "Registrar avaliação financeira" as UC10
+  usecase "Confirmar execução do contrato" as UC11
+  usecase "Registrar contrato de crédito" as UC12
+  usecase "Gerenciar agentes" as UC13
+}
+
+Cliente --> UC01
+Cliente --> UC02
+Cliente --> UC03
+Cliente --> UC04
+Cliente --> UC05
+Cliente --> UC06
+Cliente --> UC07
+Cliente --> UC08
+
+Agente --> UC01
+Agente --> UC02
+Agente --> UC04
+Agente --> UC09
+Agente --> UC10
+Agente --> UC11
+Agente --> UC13
+Banco --> UC12
+
+UC05 ..> UC02 : <<include>>
+UC06 ..> UC02 : <<include>>
+UC07 ..> UC02 : <<include>>
+UC10 ..> UC09 : <<include>>
+UC12 ..> UC10 : <<extend>>
+@enduml
