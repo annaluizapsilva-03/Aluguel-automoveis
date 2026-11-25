@@ -1,48 +1,61 @@
 @startuml casos-de-uso
+title Diagrama de Casos de Uso - Sistema Web de Aluguel de Automóveis
 left to right direction
+skinparam shadowing false
+skinparam dpi 130
 skinparam packageStyle rectangle
-actor Cliente
-actor Agente
-actor "Agente Banco" as Banco
-Agente <|-- Banco
+skinparam usecase {
+  BackgroundColor #F5F9FF
+  BorderColor #3A6EA5
+}
+skinparam actorBorderColor #3A6EA5
+
+actor Cliente as CLI
+actor "Agente\n(empresa ou banco)" as AGE
+actor "Agente Banco" as BAN
+AGE <|-- BAN
 
 rectangle "Sistema Web de Aluguel de Automóveis" {
-  usecase "Cadastrar-se" as UC01
-  usecase "Autenticar-se" as UC02
-  usecase "Gerenciar dados do cliente\n(consultar, editar, excluir)" as UC03
-  usecase "Gerenciar automóveis\n(CRUD)" as UC04
-  usecase "Criar pedido de aluguel" as UC05
-  usecase "Editar pedido" as UC06
-  usecase "Cancelar pedido" as UC07
-  usecase "Consultar pedidos e status" as UC08
-  usecase "Consultar pedidos pendentes" as UC09
-  usecase "Registrar avaliação financeira" as UC10
-  usecase "Confirmar execução do contrato" as UC11
-  usecase "Registrar contrato de crédito" as UC12
-  usecase "Gerenciar agentes" as UC13
+  usecase "UC01 Cadastrar cliente" as UC01
+  usecase "UC02 Cadastrar agente" as UC02
+  usecase "UC03 Autenticar-se" as UC03
+  usecase "UC04 Gerenciar dados do cliente" as UC04
+  usecase "UC05 Gerenciar automóveis" as UC05
+  usecase "UC06 Criar pedido de aluguel" as UC06
+  usecase "UC07 Editar pedido" as UC07
+  usecase "UC08 Cancelar pedido" as UC08
+  usecase "UC09 Consultar pedidos e status" as UC09
+  usecase "UC10 Gerenciar agentes" as UC10
+  usecase "UC11 Consultar pedidos pendentes" as UC11
+  usecase "UC12 Registrar avaliação financeira" as UC12
+  usecase "UC13 Confirmar execução do contrato" as UC13
+  usecase "UC14 Registrar contrato de crédito" as UC14
 }
 
-Cliente --> UC01
-Cliente --> UC02
-Cliente --> UC03
-Cliente --> UC04
-Cliente --> UC05
-Cliente --> UC06
-Cliente --> UC07
-Cliente --> UC08
+CLI --> UC01
+CLI --> UC03
+CLI --> UC04
+CLI --> UC05
+CLI --> UC06
+CLI --> UC07
+CLI --> UC08
+CLI --> UC09
 
-Agente --> UC01
-Agente --> UC02
-Agente --> UC04
-Agente --> UC09
-Agente --> UC10
-Agente --> UC11
-Agente --> UC13
-Banco --> UC12
+AGE --> UC02
+AGE --> UC03
+AGE --> UC05
+AGE --> UC10
+AGE --> UC11
+AGE --> UC12
+AGE --> UC13
+BAN --> UC14
 
-UC05 ..> UC02 : <<include>>
-UC06 ..> UC02 : <<include>>
-UC07 ..> UC02 : <<include>>
-UC10 ..> UC09 : <<include>>
-UC12 ..> UC10 : <<extend>>
+UC12 ..> UC11 : <<include>>
+UC14 ..> UC12 : <<extend>>
+
+note bottom of UC03
+  Todos os demais casos de uso
+  exigem usuário autenticado (RN01)
+  e respeitam o perfil (Cliente/Agente).
+end note
 @enduml

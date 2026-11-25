@@ -1,0 +1,24 @@
+@startuml estados-pedido
+title Diagrama de Estados - Ciclo de vida do Pedido de Aluguel
+skinparam shadowing false
+skinparam dpi 130
+skinparam state {
+  BackgroundColor #F5F9FF
+  BorderColor #3A6EA5
+}
+
+[*] --> EM_ANALISE : cliente cria o pedido
+EM_ANALISE --> APROVADO : agente aprova
+EM_ANALISE --> REPROVADO : agente reprova
+EM_ANALISE --> CANCELADO : cliente cancela
+APROVADO --> CONTRATO_EM_EXECUCAO : agente confirma execução
+APROVADO --> CANCELADO : cliente cancela
+REPROVADO --> [*]
+CANCELADO --> [*]
+CONTRATO_EM_EXECUCAO --> [*]
+
+note right of CANCELADO
+  Estado final: nunca volta a ser
+  aprovado nem executado (RN03)
+end note
+@enduml
