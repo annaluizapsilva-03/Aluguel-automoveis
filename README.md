@@ -265,12 +265,6 @@ Estrutura atual do repositório (Sprint 1):
 
 ---
 
-## 🙏 Agradecimentos
-
-- [**Engenharia de Software PUC Minas**](https://www.instagram.com/engsoftwarepucminas/) - Pelo apoio institucional e estrutura acadêmica.
-- [**Prof. Dr. João Paulo Aramuni**](https://github.com/joaopauloaramuni) - Pelos ensinamentos e pelo [template de README](https://github.com/joaopauloaramuni/desenvolvimento-e-integracao-de-aplicacoes-web/blob/main/TEMPLATES/template_README.md) utilizado neste projeto.
-
----
 
 ## 📄 Licença
 
